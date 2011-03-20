@@ -10,3 +10,5 @@ gen/
 *.apk
 tmp/
 .redcar/
+.classpath
+.project
