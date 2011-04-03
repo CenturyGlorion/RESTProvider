@@ -1,11 +1,17 @@
-*/bin
-*/gen
+
+libs
+target
+lib_managed
+src_managed
+project/boot
+bin
+gen
+*.class
+*.apk
+tmp
+.redcar/
 .classpath
 .project
-*.class
-*.dex
-*.apk
-*/**/*DSStore
-*/.settings
-*~
-**/target/
+**/.classpath
+**/.project
+>>>>>>> sql
