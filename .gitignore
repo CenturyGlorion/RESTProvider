@@ -8,6 +8,7 @@ bin
 gen
 *.class
 *.apk
+*.ap_
 tmp
 .redcar/
 .classpath
@@ -15,3 +16,5 @@ tmp
 **/.classpath
 **/.project
 local.properties
+**/local.properties
+
