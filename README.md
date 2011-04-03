@@ -10,8 +10,8 @@ The need for a framework to access the net is more apparent on mobile devices du
 # Structure
 
 The RESTProvider relies on 2 submodules:
-  > HttpService - making HTTP calls via a Service asynchronously
-  > SQLiteProvider - helper project for various SQLite methods behind a ContentProvider
+* HttpService - making HTTP calls via a Service asynchronously
+* SQLiteProvider - helper project for various SQLite methods behind a ContentProvider
   
 The idea is that the HttpService provide the framework for calling online data while the SQLiteProvider populate the data from the previous call into SQLite. The RESTProvider itself maps the calls to corresponding tables. For more information, visit the 2 projects individually.
 
