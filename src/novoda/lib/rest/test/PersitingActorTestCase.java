@@ -1,6 +1,7 @@
 
 package novoda.lib.rest.test;
 
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import novoda.lib.rest.actor.PersistingActor;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.ProtocolVersion;
+import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHttpResponse;
 import org.apache.http.message.BasicStatusLine;
@@ -22,7 +24,7 @@ import android.content.Context;
 import android.content.OperationApplicationException;
 import android.net.Uri;
 import android.os.RemoteException;
-import android.test.AndroidTestCase;
+import android.test.InstrumentationTestCase;
 import android.test.mock.MockContentProvider;
 import android.test.mock.MockContentResolver;
 import android.util.Pair;
@@ -30,7 +32,7 @@ import android.util.Pair;
 import com.novoda.lib.httpservice.controller.ContextHttpWrapper;
 
 @SuppressWarnings("rawtypes")
-public class PersitingActorTestCase<T extends PersistingActor> extends AndroidTestCase {
+public class PersitingActorTestCase<T extends PersistingActor> extends InstrumentationTestCase {
 
     T actor;
 
@@ -42,15 +44,32 @@ public class PersitingActorTestCase<T extends PersistingActor> extends AndroidTe
 
     public PersitingActorTestCase(Class<T> persistingActor) {
         try {
-            resolver = new AssertContentResolver();
-            context = new MockHttpContext(getContext());
             actor = persistingActor.newInstance();
-            actor.applyContext(context);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        resolver = new AssertContentResolver();
+        context = new MockHttpContext(getContext());
+        actor.applyContext(context);
+    }
+
+    protected Context getContext() {
+        return getInstrumentation().getContext();
+    }
+
+    public PersitingActorTestCase<T> given(InputStream in) {
+        httpResponse = new BasicHttpResponse(new BasicStatusLine(new ProtocolVersion("http", 1, 1),
+                200, "OK"));
+        InputStreamEntity entity = new InputStreamEntity(in, -1);
+        httpResponse.setEntity(entity);
+        return this;
     }
 
     public PersitingActorTestCase<T> given(String httpResponseBody) {
@@ -78,6 +97,7 @@ public class PersitingActorTestCase<T extends PersistingActor> extends AndroidTe
             try {
                 op.apply(MockProvider.assertAgainst(values.get(i++)), null, 0);
             } catch (OperationApplicationException e) {
+                fail();
                 e.printStackTrace();
             }
         }

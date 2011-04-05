@@ -4,7 +4,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="src" path="novoda_lib_sqliteprovider_idores_src"/>
-	<classpathentry kind="lib" path="libs/google-gson-stream-1.6.jar"/>
 	<classpathentry kind="src" path="com_novoda_lib_httpservice_idores_src_main_java"/>
+	<classpathentry exported="true" kind="lib" path="libs/google-gson-stream-1.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
