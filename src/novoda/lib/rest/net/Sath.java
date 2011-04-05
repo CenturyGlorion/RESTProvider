@@ -23,7 +23,7 @@ public class Sath implements SathVisitor {
 
     @Override
     public void visitStartElement(String elementName) {
-        inVisitState = (elementName.equalsIgnoreCase(pathStack.pop()));
+        inVisitState = (elementName.equalsIgnoreCase(pathStack.removeFirst()));
     }
 
     @Override
@@ -36,7 +36,7 @@ public class Sath implements SathVisitor {
         String current = pathStack.peek();
         if (current.charAt(0) == '[' && current.charAt(1) == '#') {
             arrayIndex = index;
-            pathStack.pop();
+            pathStack.removeFirst();
         }
     }
 
