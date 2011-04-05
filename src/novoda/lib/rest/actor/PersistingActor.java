@@ -1,21 +1,22 @@
 
 package novoda.lib.rest.actor;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import com.novoda.lib.httpservice.actor.Actor;
+import com.novoda.lib.httpservice.utils.Log;
 
 import novoda.lib.rest.marshaller.IContentProviderOperationMarshaller;
 import novoda.lib.rest.marshaller.MarshallingException;
 import novoda.lib.rest.marshaller.net.HttpResponseMarshaller;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.protocol.HttpContext;
 
 import android.content.ContentProviderOperation;
 import android.content.OperationApplicationException;
 import android.os.RemoteException;
 
-import com.novoda.lib.httpservice.actor.Actor;
-import com.novoda.lib.httpservice.utils.Log;
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * @author Carl-Gustaf Harroch
