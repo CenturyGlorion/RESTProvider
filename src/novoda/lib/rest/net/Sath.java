@@ -9,6 +9,8 @@ public class Sath implements SathVisitor {
 
     private LinkedList<String> pathStack;
 
+    private LinkedList<String> arrayStack;
+
     Callback callback;
 
     int arrayIndex;
@@ -19,11 +21,16 @@ public class Sath implements SathVisitor {
         if (sath.startsWith("/"))
             throw new SathFormatException("Streamer path should not start with '/'");
         this.sath = sath;
+        this.arrayStack = new LinkedList<String>();
     }
 
     @Override
     public void visitStartElement(String elementName) {
-        inVisitState = (elementName.equalsIgnoreCase(pathStack.removeFirst()));
+        String pop = pathStack.removeFirst();
+        if (arrayIndex > 0) {
+            arrayStack.add(pop);
+        }
+        inVisitState = (elementName.equalsIgnoreCase(pop));
     }
 
     @Override

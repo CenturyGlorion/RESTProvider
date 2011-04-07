@@ -12,11 +12,11 @@ import com.google.gson.stream.JsonToken;
 
 public class SathTest extends AndroidTestCase {
 
-    private boolean hasHit = false;
+    private int hits = 0;
 
     @Override
     protected void setUp() throws Exception {
-        hasHit = false;
+        hits = 0;
         super.setUp();
     }
 
@@ -32,9 +32,18 @@ public class SathTest extends AndroidTestCase {
     public void testSimpleJsonParsing() throws Exception {
         assertValueIsFound("{\"start\": \"value\"}", "start", "value");
     }
+    
+    public void testNoHit() throws Exception {
+        assertValueIsFound("{\"nohit\": \"value\"}", "start");
+    }
 
     public void testArrayParsing() throws Exception {
         assertValueIsFound("{\"start\":[{\"get\": \"value\" }]}", "start/[#]/get", "value");
+    }
+
+    public void testArrayParsingWith2Values() throws Exception {
+        assertValueIsFound("{\"start\":[{\"get\": \"value1\" }, {\"get\": \"value2\" }]}",
+                "start/[#]/get", "value1", "value2");
     }
 
     private void assertValueIsFound(String json, String sath, final String... values)
@@ -44,14 +53,15 @@ public class SathTest extends AndroidTestCase {
             @Override
             public void onHit(SathVisitor visitor, Object o) {
                 assertEquals(values[0], o);
-                hasHit = true;
+                ++hits;
             }
         });
-        exectueParser(json, s);
-        assertTrue("stack should be empty if hit " + s.toString(), hasHit);
+        executeParser(json, s);
+        assertEquals("stack should be empty if hit and the equal in lenght " + s.toString(),
+                values.length, hits);
     }
 
-    private void exectueParser(String json, SathVisitor visitor) throws IOException {
+    private void executeParser(String json, SathVisitor visitor) throws IOException {
         JsonReader reader = new JsonReader(new StringReader(json));
         boolean isStarted = true;
         int i = 0;
