@@ -1,5 +1,3 @@
-
-libs
 target
 lib_managed
 src_managed
@@ -17,4 +15,3 @@ tmp
 **/.project
 local.properties
 **/local.properties
-
